@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="referrer" content="no-referrer">
+  <title>Sign-in – Social Studio</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<main>
+  <nav><a href="index.html">Social Studio</a><a href="privacy.html">Privacy Policy</a><a href="terms.html">Terms of Service</a></nav>
+  <h1 id="title">Almost done</h1>
+  <p class="meta" id="lead">Copy the address below and paste it into Social Studio (Accounts page → “Paste the address”).</p>
+  <div class="box">
+    <p><code id="address" style="overflow-wrap:anywhere"></code></p>
+    <p><button type="button" id="copy">Copy</button> <span id="done"></span></p>
+  </div>
+  <p class="meta">This page only shows the sign-in code to you. Nothing is stored or sent anywhere. The code works once and
+    expires within minutes.</p>
+  <footer>Social Studio · personal, non-commercial software</footer>
+</main>
+<script>
+  // Shows the code the platform returned, so it can be pasted into the Social Studio app on the owner's PC.
+  var address = location.href;
+  var params = new URLSearchParams(location.search);
+  if (params.get("error")) {
+    document.getElementById("title").textContent = "Sign-in was cancelled";
+    document.getElementById("lead").textContent = params.get("error_description") || params.get("error");
+  }
+  document.getElementById("address").textContent = address;
+  document.getElementById("copy").addEventListener("click", function () {
+    navigator.clipboard.writeText(address).then(function () {
+      document.getElementById("done").textContent = "Copied ✓";
+    });
+  });
+</script>
+</body>
+</html>
